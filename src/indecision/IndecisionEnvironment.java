@@ -191,6 +191,7 @@ class IndecisionEnvironment extends Environment implements GridDrawData, Locatio
         } else if (point.y < 0) {
             point.y = this.grid.getRows() - 1;
         }
+        
 
         // check if the snake hit a gridObject, then take apporpriate action
         // - Apple - grow snake by 3
