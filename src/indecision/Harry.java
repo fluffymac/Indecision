@@ -26,27 +26,27 @@ public class Harry {
     private boolean paused;
     private int growthCounter;
     private Image segmentImage;
+    public boolean selfHit;
 
     //grow
     //eat
     //move
     //die
     //draw
-    
     {
-       segmentImage = ResourceTools.loadImageFromResource("resources/Harry_Potter.png");
+        segmentImage = ResourceTools.loadImageFromResource("resources/Harry_Potter.png");
     }
 
     public void draw(Graphics graphics) {
         for (Point bodySegmentLocation : getSafeBody()) {
-            
-            Image segment = segmentImage.getScaledInstance(drawData.gerCellWidth(),drawData.getCellHeight(), Image.SCALE_SMOOTH);
 
-                Point topLeft = drawData.getCellCoordinate(bodySegmentLocation);
-                
+            Image segment = segmentImage.getScaledInstance(drawData.gerCellWidth(), drawData.getCellHeight(), Image.SCALE_SMOOTH);
+
+            Point topLeft = drawData.getCellCoordinate(bodySegmentLocation);
+
 //             
-                graphics.drawImage(segment, topLeft.x, topLeft.y, null);
-            }
+            graphics.drawImage(segment, topLeft.x, topLeft.y, null);
+        }
     }
 
     public void grow(int length) {
@@ -66,7 +66,7 @@ public class Harry {
      */
     public ArrayList<Point> getSafeBody() {
         ArrayList<Point> safeBody = new ArrayList<Point>();
-        for (Point location: body) {
+        for (Point location : body) {
             safeBody.add(location);
         }
         return safeBody;
@@ -117,7 +117,7 @@ public class Harry {
     private final int HEAD_POSITION = 0;
 
     public void move() {
-        if (paused == false) {
+        if (!paused) {
 
             //make the snake move, please!!!!!
             Point newHead = (Point) getHead().clone();
@@ -135,7 +135,7 @@ public class Harry {
             if (locationValidator != null) {
                 body.add(HEAD_POSITION, locationValidator.validateLocation(newHead));
             }
-            
+
             if (growthCounter <= 0) {
                 body.remove(body.size() - 1);
             } else {
@@ -189,6 +189,18 @@ public class Harry {
      */
     public void setGrowthCounter(int growthCounter) {
         this.growthCounter = growthCounter;
+    }
+
+    /**
+     * @return the selfHit
+     */
+    public boolean selfHit() {
+        for (int i = 1; i < body.size(); i++) {
+            if (getHead().equals(body.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
